@@ -21,15 +21,18 @@ class MysqlPipeline(object):
         connection.close()
 
     def process_item(self, item, spider):
-        name = item['book_name']
-        info = item['book_info']
+        name = item['music_name']
+        name = name.replace('"', '')
+        info = item['music_info']
+        info = info.replace('"', '')
         try:
-            descri = item['book_describe']
+            descri = item['music_describe']
+            descri = descri.replace('"', '')
         except:
-            descri = '暂无内容简介...'
-        star = item['book_star']
-        image_url = item['book_image_url']
-        sql = 'insert into book.book(name, info ,descri, star, image_url) values("{}", "{}", "{}", "{}", "{}");'.format(name, info, descri, star, image_url)
+            descri = item['music_describe']
+        star = item['music_star']
+        image_url = item['music_image_url']
+        sql = 'insert into music.music(name, info ,descri, star, image_url) values("{}", "{}", "{}", "{}", "{}");'.format(name, info, descri, star, image_url)
         try:
             self.insert_information(sql)
         except:
